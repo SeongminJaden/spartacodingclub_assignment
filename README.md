@@ -35,3 +35,5 @@ final은 런타임에 한 번 할당된 후 변경이 불가능하기 때문에,
 따라서 final List<Product> products로 선언하여, 리스트 자체는 변경하지 못하도록 하되, 내부 요소는 추가할 수 있도록 설정했다.</br>
 이해하고 나니 final과 const의 차이를 확실히 구분할 수 있었고,</br>
 추후 다른 프로젝트에서도 적절한 키워드를 선택할 수 있을 것 같다! 🚀</br>
+
+#### 내일배움캠프 트러블슈팅! - https://velog.io/@roboticsmaster/%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84-TIL-Dart-1Weeks
