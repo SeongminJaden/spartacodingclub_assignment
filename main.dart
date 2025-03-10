@@ -8,7 +8,6 @@ class Product {
 }
 
 class ShoppingMall {
-  // 상품 목록
   final List<Product> products = [
     Product('셔츠', 45000),
     Product('원피스', 30000),
@@ -20,16 +19,14 @@ class ShoppingMall {
   List<Product> cart = [];
   int totalPrice = 0;
 
-  // 상품 목록을 출력하는 메서드
   void showProducts() {
-    print('---- 상품 목록 ----');
+    print('\n📌 ---- 상품 목록 ----');
     for (var i = 0; i < products.length; i++) {
       print('${i + 1}. ${products[i].name} - ${products[i].price}원');
     }
-    print('-------------------');
+    print('----------------------');
   }
 
-  // 상품을 장바구니에 담는 메서드 (수량 추가)
   void addToCart(int productIndex, int quantity) {
     if (productIndex >= 1 && productIndex <= products.length && quantity > 0) {
       var selectedProduct = products[productIndex - 1];
@@ -40,7 +37,6 @@ class ShoppingMall {
 
       totalPrice += selectedProduct.price * quantity;
 
-      // ✅ 선택한 상품 출력
       print('\n🛒 장바구니에 담긴 상품');
       print('상품명: ${selectedProduct.name}');
       print('가격: ${selectedProduct.price}원');
@@ -48,13 +44,32 @@ class ShoppingMall {
       print('총 가격: ${selectedProduct.price * quantity}원');
       print('---------------------------------------------');
     } else {
-      print('입력값이 올바르지 않아요!');
+      print('❌ 입력값이 올바르지 않아요!');
     }
   }
 
-  // 장바구니 총 가격을 출력하는 메서드
+  void showCart() {
+    if (cart.isEmpty) {
+      print('\n🛒 장바구니에 담긴 상품이 없습니다.');
+    } else {
+      var productNames = cart.map((product) => product.name).toSet().toList();
+      print('\n🛒 장바구니에 ${productNames.join(", ")}이(가) 담겨있네요.');
+      print('총 $totalPrice 원 입니다!');
+    }
+  }
+
   void showTotal() {
     print('\n🛒 현재 장바구니 총 가격: $totalPrice 원');
+  }
+
+  void clearCart() {
+    if (cart.isEmpty) {
+      print('\n❌ 이미 장바구니가 비어있습니다.');
+    } else {
+      cart.clear();
+      totalPrice = 0;
+      print('\n🛒 장바구니를 초기화했습니다.');
+    }
   }
 }
 
@@ -65,7 +80,8 @@ void main() {
   while (isRunning) {
     print('\n--- 쇼핑몰 프로그램 ---');
     print('---------------------------------------------');
-    print('[1] 상품 목록 보기 / [2] 장바구니에 담기 / [3] 장바구니 총 가격 보기 / [4] 종료');
+    print('[1] 상품 목록 보기 / [2] 장바구니에 담기 / [3] 장바구니 목록 확인');
+    print('[4] 종료 / [5] 장바구니 총 가격 보기 / [6] 장바구니 초기화');
     print('---------------------------------------------');
     stdout.write('원하는 작업을 선택하세요: ');
 
@@ -87,6 +103,7 @@ void main() {
           print(
             '\n📌 선택한 상품: ${selectedProduct.name} (${selectedProduct.price}원)',
           );
+
           stdout.write('수량을 입력하세요 (1개 이상): ');
           var quantity = int.tryParse(stdin.readLineSync()?.trim() ?? '');
 
@@ -101,12 +118,26 @@ void main() {
         break;
 
       case '3':
-        shoppingMall.showTotal();
+        shoppingMall.showCart();
         break;
 
       case '4':
-        print('이용해 주셔서 감사합니다 ~ 안녕히 가세요! 👋');
-        isRunning = false;
+        stdout.write('\n정말 종료하시겠습니까? (5 입력 시 종료): ');
+        var confirmExit = stdin.readLineSync()?.trim();
+        if (confirmExit == '5') {
+          print('\n이용해 주셔서 감사합니다 ~ 안녕히 가세요! 👋');
+          isRunning = false;
+        } else {
+          print('❌ 종료하지 않습니다.');
+        }
+        break;
+
+      case '5':
+        shoppingMall.showTotal();
+        break;
+
+      case '6':
+        shoppingMall.clearCart();
         break;
 
       default:
