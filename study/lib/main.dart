@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                print('kakao Login');
+                print('instagram Login');
               },
               child: Text('instagram Login'),
             ),
